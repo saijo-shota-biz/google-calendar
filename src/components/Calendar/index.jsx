@@ -15,14 +15,16 @@ const Calendar = () => {
     return date;
   })
 
-  const isNextMonth = (date) => date.getFullYear() > selectedDate.getFullYear() || date.getMonth() > selectedDate.getMonth();
+  const isThisMonth = (date) => date.getFullYear() === selectedDate.getFullYear() && date.getMonth() === selectedDate.getMonth();
+
+  const isToday = (date) => date.getMonth() === selectedDate.getMonth() && date.getDate() === selectedDate.getDate();
 
   return (
     <div className="calendar">
       <GridList cellHeight="auto" cols={7} spacing={0}>
         {dateList.map((date, i) => (
           <GridListTile key={i} cols={1}>
-            <CalendarElement date={date} showDayOfWeek={i < 7} nextMonth={isNextMonth(date)} today={date.getDate() === selectedDate.getDate()}></CalendarElement>
+            <CalendarElement date={date} showDayOfWeek={i < 7} thisMonth={isThisMonth(date)} today={isToday(date)}></CalendarElement>
           </GridListTile>
         ))}
       </GridList>
