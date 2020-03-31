@@ -3,6 +3,7 @@ import { GridList, GridListTile } from "@material-ui/core";
 import CalendarElement from "../CalendarElement";
 import "./style.sass";
 import { StateContext } from "../../context/context";
+import AddScheduleDialog from "../AddScheduleDialog";
 
 const Calendar = () => {
 
@@ -28,9 +29,9 @@ const Calendar = () => {
           </GridListTile>
         ))}
       </GridList>
+      <AddScheduleDialog></AddScheduleDialog>
     </div>
   );
-
 }
 
 export default Calendar;

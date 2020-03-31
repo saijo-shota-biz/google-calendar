@@ -1,19 +1,7 @@
 import React from "react";
-import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers"
-import DateFnsUtils from '@date-io/date-fns';
 import { Toolbar, Typography, AppBar, IconButton, Icon } from "@material-ui/core";
 import { StateContext } from "../../context/context";
-import { format } from "date-fns";
-
-class LocalizedUtils extends DateFnsUtils {
-  getCalendarHeaderText(date) {
-    return format(date, "yyyy年MM月dd日", { locale: this.locale });
-  }
-
-  getWeekdays() {
-    return [ "日", "月", "火", "水", "木", "金", "土" ];
-  }
-}
+import DateTimePicker from "../DateTimePicker";
 
 const ApplicationBar = () => {
 
@@ -46,15 +34,7 @@ const ApplicationBar = () => {
         <IconButton onClick={prevDate}>
           <Icon>keyboard_arrow_left</Icon>
         </IconButton>
-        <MuiPickersUtilsProvider utils={LocalizedUtils}>
-          <DatePicker
-            disableToolbar
-            variant="inline"
-            format="yyyy年MM月dd日"
-            value={state.date}
-            onChange={changeDate}
-          />
-        </MuiPickersUtilsProvider>
+        <DateTimePicker value={state.date} onChange={changeDate} type="date"></DateTimePicker>
         <IconButton onClick={nextDate}>
           <Icon>keyboard_arrow_right</Icon>
         </IconButton>
