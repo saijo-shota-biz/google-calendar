@@ -3,8 +3,9 @@ import { Fab, Icon, Dialog, Paper, DialogActions, Button, DialogContent, MenuIte
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import "./style.sass";
 import Draggable from "react-draggable";
-import { whatList } from "./const";
+import { whatList } from "../constans/const";
 import DateTimePicker from "../DateTimePicker";
+import { StateContext } from "../../context/context";
 
 const PaperComponent = (props) => {
   return (
@@ -47,8 +48,9 @@ const AddScheduleDialog = () => {
   const [whenEnd, setWhenEnd] = React.useState(new Date().getTime());
   const [what, setWhat] = React.useState("");
 
-  const time = (whenEnd - whenStart) / 3600000;
+  const [, setState] = React.useContext(StateContext);
 
+  const time = Math.floor(((whenEnd - whenStart) / 3600000) / 0.5) * 0.5;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,6 +62,18 @@ const AddScheduleDialog = () => {
 
   const handleChangeWhat = (event) => {
     setWhat(event.target.value);
+  }
+
+  const saveSchedule = () => {
+    setState(state => {
+      const schedule = { date: state.date.toLocaleDateString(), time, what }
+      state.schedules.push(schedule);
+      return { date: state.date, schedules: state.schedules };
+    });
+    setWhenStart(new Date().getTime());
+    setWhenEnd(new Date().getTime());
+    setWhat("");
+    handleClose();
   }
 
   return (
@@ -75,9 +89,9 @@ const AddScheduleDialog = () => {
         </DialogTitle>
         <DialogContent>
           <div className="add-schedule-dialog__form">
-            <DateTimePicker fullWidth type="time" label="いつから" value={whenStart} onChange={setWhenStart}></DateTimePicker>
+            <DateTimePicker fullWidth type="time" label="何時から" value={whenStart} onChange={setWhenStart}></DateTimePicker>
             から
-            <DateTimePicker fullWidth type="time" label="いつまで" value={whenEnd} onChange={setWhenEnd}></DateTimePicker>
+            <DateTimePicker fullWidth type="time" label="何時まで" value={whenEnd} onChange={setWhenEnd}></DateTimePicker>
             の{time}時間
             <TextField
               select
@@ -94,7 +108,7 @@ const AddScheduleDialog = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">をやった。</Button>
+          <Button onClick={saveSchedule} color="primary">をやった。</Button>
         </DialogActions>
       </Dialog>
       <Fab className="add-schedule-dialog__btn" color="default" variant="round" onClick={handleClickOpen}>

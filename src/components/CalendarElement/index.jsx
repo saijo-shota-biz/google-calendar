@@ -2,6 +2,8 @@ import React from 'react';
 import "./style.sass";
 import { Paper } from '@material-ui/core';
 import { StateContext } from '../../context/context';
+import SchduleChip from '../ScheduleChip';
+import { whatList } from '../constans/const';
 
 const CalendarElement = ({ date, showDayOfWeek }) => {
 
@@ -19,7 +21,7 @@ const CalendarElement = ({ date, showDayOfWeek }) => {
                  : "";
 
   const selectDate = () => {
-    setState(state => ({ date }))
+    setState(state => ({ date, schedules: state.schedules }))
   }
 
   return (
@@ -38,6 +40,11 @@ const CalendarElement = ({ date, showDayOfWeek }) => {
         </span>
       </div>
       {/* 予定 */}
+      {
+        state.schedules
+          .filter(s => s.date === date.toLocaleDateString())
+          .map((s, i) => (<SchduleChip key={i} text={whatList.find(e => e.value === s.what).label + " " + s.time + "H"}></SchduleChip>))
+      }
     </Paper>
   );
 

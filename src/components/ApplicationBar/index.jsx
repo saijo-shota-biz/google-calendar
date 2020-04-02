@@ -11,19 +11,19 @@ const ApplicationBar = () => {
     setState(state => {
       const date = state.date;
       date.setMonth(date.getMonth() - 1);
-      return { date }
+      return { date, schedules: state.schedules }
     })
   }
 
   const changeDate = (date) => {
-    setState(state => ({ date: date }))
+    setState(state => ({ date, schedules: state.schedules }))
   }
 
   const nextDate = () => {
     setState(state => {
       const date = state.date;
       date.setMonth(date.getMonth() + 1);
-      return { date }
+      return { date, schedules: state.schedules }
     })
   }
 

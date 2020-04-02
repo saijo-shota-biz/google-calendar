@@ -46,7 +46,6 @@ const DateTimePicker = ({ value, onChange, type, label = "" }) => {
       value={value}
       onChange={onChange}
       label={label}
-      minutesStep={30}
       ampm={false}
       autoOk={true}
       fullWidth
